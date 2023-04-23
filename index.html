@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+        background-color: black;
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 10vw;
+        font-weight: bold;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="currentTime"></div>
+    <div id="julianDate"></div>
+    <div id="todaysDate"></div>
+    <div id="dateIn28Days"></div>
+
+    <script>
+        function updateDateTimeInfo() {
+            const now = new Date();
+            const dateFormat = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
+
+            document.getElementById('currentTime').textContent = timeFormat.format(now);
+            document.getElementById('todaysDate').textContent = dateFormat.format(now);
+            document.getElementById('julianDate').textContent = getJulianDayCode(now);
+
+            const futureDate = new Date(now.getTime() + 28 * 24 * 60 * 60 * 1000);
+            document.getElementById('dateIn28Days').textContent = dateFormat.format(futureDate);
+        }
+
+        function getJulianDayCode(date) {
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = date - start;
+            const oneDay = 1000 * 60 * 60 * 24;
+            const day = Math.floor(diff / oneDay);
+            return day;
+        }
+
+        updateDateTimeInfo();
+        setInterval(updateDateTimeInfo, 1000);
+    </script>
+</body>
+</html>
