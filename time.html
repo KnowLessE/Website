@@ -33,7 +33,7 @@
         function updateDateTimeInfo() {
             const now = new Date();
             const dateFormat = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
+            const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, hourCycle: 'h23' });
 
             document.getElementById('currentTime').textContent = timeFormat.format(now);
             document.getElementById('todaysDate').textContent = dateFormat.format(now);
