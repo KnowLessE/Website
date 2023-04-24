@@ -33,7 +33,7 @@
         function updateDateTimeInfo() {
             const now = new Date();
             const dateFormat = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
-            const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+            const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false });
 
             document.getElementById('currentTime').textContent = timeFormat.format(now);
             document.getElementById('todaysDate').textContent = dateFormat.format(now);
@@ -44,8 +44,11 @@
         }
 
         function getJulianDayCode(date) {
-            const J = Math.floor((date.getTime() / 86400000) - (date.getTimezoneOffset() / 1440) + 2440587.5);
-            return J;
+            const start = new Date(date.getFullYear(), 0, 0);
+            const diff = (date - start) + ((start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000); // adjust for timezone offset
+            const oneDay = 1000 * 60 * 60 * 24;
+            const day = Math.floor(diff / oneDay);
+            return ("00" + day).slice(-3); // pad with zeros and get the last three digits
         }
 
         updateDateTimeInfo();
