@@ -35,6 +35,9 @@
             const dateFormat = new Intl.DateTimeFormat('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
             const timeFormat = new Intl.DateTimeFormat('en-US', { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false, hourCycle: 'h23' });
 
+            //to fix the time ofset for printers at work for 6AM
+            now.setHours(now.getHours() - 6);
+            
             let currentTime = timeFormat.format(now);
             if (currentTime.slice(0, 2) === '24') { // Check if the time is equal to midnight
                 currentTime = '00' + currentTime.slice(2);
